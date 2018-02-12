@@ -1,0 +1,39 @@
+{
+  "name": "cordova-plugin-ad-chartboost",
+  "version": "0.0.0",
+  "description": "Show chartboost interstitial (static interstitial, video interstial), more apps, rewarded video ad",
+  "cordova": {
+    "id": "cordova-plugin-ad-chartboost",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fubira/cordova-plugin-ad-chartboost.git"
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "ad",
+    "video",
+    "chartboost",
+    "monetisation",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "fubira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fubira/cordova-plugin-ad-chartboost/issues"
+  },
+  "homepage": "https://github.com/fubira/cordova-plugin-ad-chartboost#readme"
+}
