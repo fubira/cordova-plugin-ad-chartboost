@@ -1,9 +1,9 @@
 /*
  * CBInPlay.h
  * Chartboost
- * 7.1.0
+ * 6.6.3
  *
- * Copyright 2018 Chartboost. All rights reserved.
+ * Copyright 2011 Chartboost. All rights reserved.
  */
 
 #import "Chartboost.h"
