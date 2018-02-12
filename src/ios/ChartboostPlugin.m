@@ -8,13 +8,7 @@
 @implementation ChartboostPlugin
 
 @synthesize callbackIdKeepCallback;
-//
-@synthesize email;
-@synthesize licenseKey_;
-@synthesize validLicenseKey;
-static NSString *TEST_APP_ID = @"55404ffdc909a62b5e90ed69";
-static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b";
-//
+e//
 @synthesize appId;
 @synthesize appSignature;
 //
@@ -25,17 +19,6 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
 - (void) pluginInitialize {
     [super pluginInitialize];    
     //
-}
-
-- (void) setLicenseKey: (CDVInvokedUrlCommand*)command {
-    NSString *email = [command.arguments objectAtIndex: 0];
-    NSString *licenseKey = [command.arguments objectAtIndex: 1];
-    NSLog(@"%@", email);
-    NSLog(@"%@", licenseKey);
-    
-    [self.commandDelegate runInBackground:^{
-        [self _setLicenseKey:email aLicenseKey:licenseKey];
-    }];
 }
 
 - (void) setUp: (CDVInvokedUrlCommand*)command {
@@ -116,62 +99,10 @@ static NSString *TEST_APP_SIGNATURE = @"37f4e779dc43837e7a6645002dffdeab0a97369b
     //}];
 }
 
-- (void) _setLicenseKey:(NSString *)email aLicenseKey:(NSString *)licenseKey {
-	self.email = email;
-	self.licenseKey_ = licenseKey;
-	
-	//
-	NSString *str1 = [self md5:[NSString stringWithFormat:@"cordova-plugin-: %@", email]];
-	NSString *str2 = [self md5:[NSString stringWithFormat:@"cordova-plugin-ad-chartboost: %@", email]];
-	NSString *str3 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.: %@", email]];
-	NSString *str4 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.chartboost: %@", email]];
-	NSString *str5 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.video.chartboost: %@", email]];
-	if(licenseKey_ != Nil && ([licenseKey_ isEqualToString:str1] || [licenseKey_ isEqualToString:str2] || [licenseKey_ isEqualToString:str3] || [licenseKey_ isEqualToString:str4] || [licenseKey_ isEqualToString:str5])){
-		self.validLicenseKey = YES;
-		NSArray *excludedLicenseKeys = [NSArray arrayWithObjects: @"xxx", nil];
-		for (int i = 0 ; i < [excludedLicenseKeys count] ; i++) {
-			if([[excludedLicenseKeys objectAtIndex:i] isEqualToString:licenseKey]) {
-				self.validLicenseKey = NO;
-				break;
-			}
-		}
-	}
-	else {
-		self.validLicenseKey = NO;
-	}
-	if (self.validLicenseKey)
-		NSLog(@"valid licenseKey");
-	else {
-		NSLog(@"invalid licenseKey");
-		//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Cordova Chartboost: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		//[alert show];
-	}
-}
-
-- (NSString*) md5:(NSString*) input {
-    const char *cStr = [input UTF8String];
-    unsigned char digest[16];
-    CC_MD5( cStr, strlen(cStr), digest ); // This is the md5 call
-    
-    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
-    
-    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
-        [output appendFormat:@"%02x", digest[i]];
-    
-    return  output;
-}
-
 - (void) _setUp:(NSString *)appId anAppSignature:(NSString *)appSignature {
 	self.appId = appId;
 	self.appSignature = appSignature;
 
-	if (!validLicenseKey) {
-		if (arc4random() % 100 <= 1) {//0 ~ 99		
-			self.appId = TEST_APP_ID;
-			self.appSignature = TEST_APP_SIGNATURE;
-		}
-	}
-	
 	//
 	[Chartboost startWithAppId:self.appId appSignature:self.appSignature delegate:self];
 }

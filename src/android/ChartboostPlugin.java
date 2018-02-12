@@ -88,12 +88,6 @@ public class ChartboostPlugin extends CordovaPlugin {
 	private static final String LOG_TAG = "ChartboostPlugin";
 	private CallbackContext callbackContextKeepCallback;
 	//
-	protected String email;
-	protected String licenseKey;
-	public boolean validLicenseKey;
-	protected String TEST_APP_ID = "593a5cae04b0160763c9f340";
-	protected String TEST_APP_SIGNATURE = "ea1859a4725ac63fa155aab73ad2c34149d699b2";	
-	//
 	protected String appId;
 	protected String appSignature;
 	//
@@ -146,12 +140,7 @@ public class ChartboostPlugin extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-		if (action.equals("setLicenseKey")) {
-			setLicenseKey(action, args, callbackContext);
-
-			return true;
-		}	
-		else if (action.equals("setUp")) {
+		if (action.equals("setUp")) {
 			setUp(action, args, callbackContext);
 
 			return true;
@@ -190,20 +179,6 @@ public class ChartboostPlugin extends CordovaPlugin {
 		return false; // Returning false results in a "MethodNotFound" error.
 	}
 
-	private void setLicenseKey(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		final String email = args.getString(0);
-		final String licenseKey = args.getString(1);				
-		Log.d(LOG_TAG, String.format("%s", email));			
-		Log.d(LOG_TAG, String.format("%s", licenseKey));
-		
-		cordova.getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				_setLicenseKey(email, licenseKey);
-			}
-		});
-	}
-	
 	private void setUp(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		//Activity activity=cordova.getActivity();
 		//webView
@@ -317,48 +292,9 @@ public class ChartboostPlugin extends CordovaPlugin {
 		});
 	}
 	
-	public void _setLicenseKey(String email, String licenseKey) {
-		this.email = email;
-		this.licenseKey = licenseKey;
-		//
-		String str1 = Util.md5("cordova-plugin-: " + email);
-		String str2 = Util.md5("cordova-plugin-ad-chartboost: " + email);
-		String str3 = Util.md5("com.cranberrygame.cordova.plugin.: " + email);
-		String str4 = Util.md5("com.cranberrygame.cordova.plugin.ad.chartboost: " + email);
-		String str5 = Util.md5("com.cranberrygame.cordova.plugin.ad.video.chartboost: " + email);
-		if(licenseKey != null && (licenseKey.equalsIgnoreCase(str1) || licenseKey.equalsIgnoreCase(str2) || licenseKey.equalsIgnoreCase(str3) || licenseKey.equalsIgnoreCase(str4) || licenseKey.equalsIgnoreCase(str5))) {
-			this.validLicenseKey = true;
-			//
-			String[] excludedLicenseKeys = {"xxx"};
-			for (int i = 0 ; i < excludedLicenseKeys.length ; i++) {
-				if (excludedLicenseKeys[i].equals(licenseKey)) {
-					this.validLicenseKey = true; //false
-					break;
-				}
-			}			
-			if (this.validLicenseKey)
-				Log.d(LOG_TAG, String.format("%s", "valid licenseKey"));
-			else
-				Log.d(LOG_TAG, String.format("%s", "invalid licenseKey"));
-		}
-		else {
-			Log.d(LOG_TAG, String.format("%s", "valid licenseKey")); //invalid
-			this.validLicenseKey = true; // false
-		}
-		//if (!this.validLicenseKey)
-		//	Util.alert(cordova.getActivity(),"Cordova Chartboost: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova");			
-	}
-	
 	private void _setUp(String appId, String appSignature) {
 		this.appId = appId;
 		this.appSignature = appSignature;
-		
-		if (!validLicenseKey) {
-			if (new Random().nextInt(100) <= 1) {//0~99					
-				this.appId = TEST_APP_ID;
-				this.appSignature = TEST_APP_SIGNATURE;
-			}
-		}
 		
 		Chartboost.startWithAppId(cordova.getActivity(), this.appId , this.appSignature);
 		Chartboost.setLoggingLevel(Level.ALL);		

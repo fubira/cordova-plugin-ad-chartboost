@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-ad-chartboost"
-    version="0.0.0">
+    id="cordova-plugin-chartboost-free"
+    version="0.1.0">
 	
     <name>Cordova Chartboost plugin</name>
     <description>Show chartboost interstitial (static interstitial, video interstial), more apps, rewarded video ad</description>
-    <author>Sang Ki Kwon (Cranberrygame)</author>	
+    <author>fubira (codearts)</author>	
     <license>MIT</license>
     <keywords>cordova,plugin,ad,chartboost,monetisation,interstitial,video</keywords>
-    <repo>https://github.com/fubira/cordova-plugin-ad-chartboost</repo>
-    <issue>https://github.com/fubira/cordova-plugin-ad-chartboost/issues</issue>	
+    <repo>https://github.com/fubira/cordova-plugin-chartboost-free</repo>
+    <issue>https://github.com/fubira/cordova-plugin-chartboost-free/issues</issue>	
 	<engines>
 	    <engine name="cordova" version=">=3.0.0" />
 	</engines>
