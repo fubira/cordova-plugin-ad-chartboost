@@ -8,7 +8,7 @@
 @implementation ChartboostPlugin
 
 @synthesize callbackIdKeepCallback;
-e//
+//
 @synthesize appId;
 @synthesize appSignature;
 //
